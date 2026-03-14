@@ -25,6 +25,8 @@ interface RiskItem {
     condition: string;
     level: 'Low' | 'Moderate' | 'High' | 'Critical';
     reason: string;
+    diagnosis?: string;
+    treatment?: string;
 }
 
 const RISK_COLOR: Record<string, string> = {
@@ -110,7 +112,9 @@ function analyzeRisk(f: SimpleForm): RiskItem[] {
         risks.push({
             condition: 'Hypertensive Heart Disease',
             level: bpCategory === 'very_high' ? 'High' : 'Moderate',
-            reason: `Blood pressure ${sys}/${dia} mmHg${f.smoker ? ', smoking' : ''}${f.diabetic ? ', diabetes' : ''} significantly increases cardiac strain.`
+            reason: `Blood pressure ${sys}/${dia} mmHg${f.smoker ? ', smoking' : ''}${f.diabetic ? ', diabetes' : ''} significantly increases cardiac strain.`,
+            diagnosis: 'Left ventricular hypertrophy, stiffened heart muscle, and increased afterload.',
+            treatment: 'Strict blood pressure control (ACE inhibitors, ARBs), sodium restriction, and cardiovascular monitoring.'
         });
     }
 
@@ -119,7 +123,9 @@ function analyzeRisk(f: SimpleForm): RiskItem[] {
         risks.push({
             condition: 'Coronary Artery Disease (CAD)',
             level: (f.chestPain && f.smoker && f.familyHistory) ? 'Critical' : 'High',
-            reason: `Chest pain combined with ${[f.smoker && 'smoking', f.familyHistory && 'family history', f.diabetic && 'diabetes', age > 45 && 'age over 45'].filter(Boolean).join(', ')} strongly suggests CAD.`
+            reason: `Chest pain combined with ${[f.smoker && 'smoking', f.familyHistory && 'family history', f.diabetic && 'diabetes', age > 45 && 'age over 45'].filter(Boolean).join(', ')} strongly suggests CAD.`,
+            diagnosis: 'Ischemic changes, possible ST-segment depression or T-wave inversion indicative of poor myocardial perfusion.',
+            treatment: 'Immediate cardiology consult, ECG/Troponin test, Aspirin, Statins, and Beta-blockers.'
         });
     }
 
@@ -128,7 +134,9 @@ function analyzeRisk(f: SimpleForm): RiskItem[] {
         risks.push({
             condition: 'Atrial Fibrillation',
             level: age > 65 ? 'High' : 'Moderate',
-            reason: `Age ${age}${f.alcohol ? ', alcohol use' : ''}${bpCategory !== 'normal' ? `, BP ${sys}/${dia} mmHg` : ''} are classic AFib risk factors.`
+            reason: `Age ${age}${f.alcohol ? ', alcohol use' : ''}${bpCategory !== 'normal' ? `, BP ${sys}/${dia} mmHg` : ''} are classic AFib risk factors.`,
+            diagnosis: 'Irregularly irregular rhythm with absent P-waves. High risk of thrombus formation.',
+            treatment: 'Rate control (Beta-blockers, Diltiazem) and Anticoagulation (DOACs/Warfarin) based on CHA2DS2-VASc score.'
         });
     }
 
@@ -137,7 +145,9 @@ function analyzeRisk(f: SimpleForm): RiskItem[] {
         risks.push({
             condition: 'Diabetic Cardiomyopathy',
             level: (f.diabetic && bpCategory === 'high') ? 'High' : 'Moderate',
-            reason: `Diabetes combined with ${bpCategory !== 'normal' ? `BP ${sys}/${dia} mmHg` : `age ${age}`} progressively damages cardiac muscle.`
+            reason: `Diabetes combined with ${bpCategory !== 'normal' ? `BP ${sys}/${dia} mmHg` : `age ${age}`} progressively damages cardiac muscle.`,
+            diagnosis: 'Microvascular dysfunction leading to heart failure with preserved or reduced ejection fraction.',
+            treatment: 'Glycemic control (SGLT2 inhibitors), BP management, and continuous cardiac screening.'
         });
     }
 
@@ -146,7 +156,9 @@ function analyzeRisk(f: SimpleForm): RiskItem[] {
         risks.push({
             condition: 'Myocarditis (Fever-related)',
             level: isHighFever && f.chestPain ? 'High' : 'Moderate',
-            reason: `Temperature ${tempC.toFixed(1)} °C${f.chestPain ? ' with chest pain' : ''} may indicate viral myocarditis — inflammation of the heart muscle.`
+            reason: `Temperature ${tempC.toFixed(1)} °C${f.chestPain ? ' with chest pain' : ''} may indicate viral myocarditis — inflammation of the heart muscle.`,
+            diagnosis: 'Diffuse ST changes, T-wave inversions, and potential arrhythmias secondary to myocardial inflammation.',
+            treatment: 'Rest, NSAIDs or Colchicine, and treatment of underlying infection. Avoid strenuous exercise.'
         });
     }
 
@@ -155,7 +167,9 @@ function analyzeRisk(f: SimpleForm): RiskItem[] {
         risks.push({
             condition: 'Hypothermia-related Arrhythmia',
             level: 'High',
-            reason: `Temperature ${tempC.toFixed(1)} °C is dangerously low. Hypothermia can trigger bradycardia, heart block, and ventricular arrhythmias.`
+            reason: `Temperature ${tempC.toFixed(1)} °C is dangerously low. Hypothermia can trigger bradycardia, heart block, and ventricular arrhythmias.`,
+            diagnosis: 'Sinus bradycardia, distinct Osborn (J) waves, and prolonged intervals due to delayed conduction.',
+            treatment: 'Gradual active rewarming; avoid rough handling which may precipitate ventricular fibrillation.'
         });
     }
 
@@ -164,7 +178,9 @@ function analyzeRisk(f: SimpleForm): RiskItem[] {
         risks.push({
             condition: isBrady ? 'Bradycardia' : isExtremeTachy ? 'Supraventricular Tachycardia (SVT)' : 'Sinus Tachycardia',
             level: isExtremeTachy ? 'High' : 'Moderate',
-            reason: `Heart rate ${hr} bpm is ${isBrady ? 'below 60 (bradycardia)' : `above ${isExtremeTachy ? '150 (extreme tachycardia)' : '100 (tachycardia)'}`}. This may indicate an arrhythmia${f.chestPain ? ' combined with chest pain' : ''}.`
+            reason: `Heart rate ${hr} bpm is ${isBrady ? 'below 60 (bradycardia)' : `above ${isExtremeTachy ? '150 (extreme tachycardia)' : '100 (tachycardia)'}`}. This may indicate an arrhythmia${f.chestPain ? ' combined with chest pain' : ''}.`,
+            diagnosis: isBrady ? 'Slow sinus node firing or conduction block.' : 'Abnormally fast heart rate, potentially originating above the ventricles (SVT) or simply sinus tachycardia secondary to systemic stress.',
+            treatment: isBrady ? 'Atropine if symptomatic; pacemaker evaluation if chronic.' : isExtremeTachy ? 'Vagal maneuvers, Adenosine, or synchronized cardioversion.' : 'Treat underlying cause (hydration, fever reduction, anxiety management).'
         });
     }
 
@@ -173,7 +189,9 @@ function analyzeRisk(f: SimpleForm): RiskItem[] {
         risks.push({
             condition: isCriticalO2 ? 'Severe Hypoxemia / Pulmonary Embolism Risk' : 'Hypoxemia (Low Blood Oxygen)',
             level: isCriticalO2 ? 'Critical' : 'High',
-            reason: `SpO₂ of ${spo2}% is ${isCriticalO2 ? 'critically low (<90%)' : 'below normal (<95%)'}. This may indicate heart failure, pulmonary embolism, or severe respiratory/cardiac compromise.`
+            reason: `SpO₂ of ${spo2}% is ${isCriticalO2 ? 'critically low (<90%)' : 'below normal (<95%)'}. This may indicate heart failure, pulmonary embolism, or severe respiratory/cardiac compromise.`,
+            diagnosis: 'Insufficient oxygen delivery to cardiac tissue, potentially leading to ectopic beats or ischemia.',
+            treatment: 'Supplemental oxygen therapy, treat underlying respiratory cause, and continuous monitoring.'
         });
     }
 
@@ -182,7 +200,9 @@ function analyzeRisk(f: SimpleForm): RiskItem[] {
         risks.push({
             condition: 'Alcoholic Cardiomyopathy',
             level: age > 50 ? 'Moderate' : 'Low',
-            reason: `Long-term alcohol use can weaken heart muscle tissue, especially after age 35.`
+            reason: `Long-term alcohol use can weaken heart muscle tissue, especially after age 35.`,
+            diagnosis: 'Dilated heart chambers, poor contractility, and increased susceptibility to arrhythmias.',
+            treatment: 'Immediate alcohol abstinence, Beta-blockers, and ACE inhibitors to manage heart failure symptoms.'
         });
     }
 
@@ -191,7 +211,9 @@ function analyzeRisk(f: SimpleForm): RiskItem[] {
         risks.push({
             condition: 'Sinus Tachycardia / Arrhythmia',
             level: 'Low',
-            reason: `Smoking with fever (${tempC.toFixed(1)} °C) elevates heart rate and can trigger benign arrhythmias.`
+            reason: `Smoking with fever (${tempC.toFixed(1)} °C) elevates heart rate and can trigger benign arrhythmias.`,
+            diagnosis: 'Elevated sympathetic tone leading to rapid pacemaker activity.',
+            treatment: 'Smoking cessation, hydration, and antipyretics to lower body temperature.'
         });
     }
 
@@ -200,7 +222,9 @@ function analyzeRisk(f: SimpleForm): RiskItem[] {
         risks.push({
             condition: 'Thromboembolic / Stroke Risk',
             level: riskScore >= 10 ? 'Critical' : 'High',
-            reason: `Your cumulative risk score (${riskScore}/14) is significantly elevated. Multiple combined risk factors increase clot and stroke risk.`
+            reason: `Your cumulative risk score (${riskScore}/14) is significantly elevated. Multiple combined risk factors increase clot and stroke risk.`,
+            diagnosis: 'High risk of blood clot formation due to combined systemic factors (hypertension, diabetes, age).',
+            treatment: 'Aggressive management of all risk factors; evaluation for prophylactic anticoagulation or antiplatelet therapy.'
         });
     }
 
@@ -487,9 +511,15 @@ const PredictionView: React.FC = () => {
                                                 <p style={{ margin: '0 0 0.4rem 0', fontSize: '0.82rem', color: 'var(--text-main)', fontStyle: 'italic', lineHeight: 1.35 }}>
                                                     {rhythmData.description}
                                                 </p>
-                                                <div style={{ padding: '0.6rem', backgroundColor: 'rgba(255,255,255,0.4)', borderRadius: '8px', border: '1px solid rgba(0,0,0,0.05)', fontSize: '0.8rem', color: 'var(--text-main)' }}>
-                                                    <p style={{ margin: '0 0 0.4rem 0' }}><strong>🩺 Diagnostic Findings:</strong> {rhythmData.findings}</p>
-                                                    <p style={{ margin: 0 }}><strong>💊 Standard Treatment:</strong> {rhythmData.treatment}</p>
+                                                <div style={{ padding: '0.8rem', backgroundColor: 'rgba(255,255,255,0.6)', borderRadius: '10px', border: '1px solid rgba(0,0,0,0.06)', fontSize: '0.82rem', color: 'var(--text-main)', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                                                    <div>
+                                                        <strong style={{ display: 'block', color: 'var(--accent-orange)', marginBottom: '0.2rem' }}>🩺 Diagnostic Findings:</strong>
+                                                        <span style={{ lineHeight: 1.4 }}>{r.diagnosis || rhythmData.findings}</span>
+                                                    </div>
+                                                    <div>
+                                                        <strong style={{ display: 'block', color: '#10B981', marginBottom: '0.2rem' }}>💊 Standard Treatment:</strong>
+                                                        <span style={{ lineHeight: 1.4 }}>{r.treatment || rhythmData.treatment}</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         )}
