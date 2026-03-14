@@ -37,7 +37,7 @@ const WelcomeScreen: React.FC = () => {
             <style>{`@keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.15); } }`}</style>
 
             <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: 'var(--text-main)', margin: '0 0 0.5rem 0' }}>
-                ECG <span style={{ color: 'var(--accent-orange)' }}>Monitor</span>
+                VS <span style={{ color: 'var(--accent-orange)' }}>beat</span>
             </h1>
             <p style={{ color: 'var(--text-muted)', marginBottom: '3rem', fontSize: '1rem' }}>
                 Your intelligent cardiac analysis platform
