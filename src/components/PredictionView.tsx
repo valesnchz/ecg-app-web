@@ -287,7 +287,7 @@ const PredictionView: React.FC = () => {
         }, 2000);
     };
 
-    const isFormValid = !!form.age;
+    const isFormValid = !!form.age && !!form.systolic && !!form.diastolic && !!form.heartRate && !!form.spO2;
 
     const overallLevel = results.length
         ? (['Critical', 'High', 'Moderate', 'Low'] as const).find(l => results.some(r => r.level === l)) ?? 'Low'
@@ -418,6 +418,11 @@ const PredictionView: React.FC = () => {
                             <Toggle label="Chest Pain" icon="💢" value={form.chestPain} onChange={v => set('chestPain', v)} />
                         </div>
 
+                        {!isFormValid && (
+                            <p style={{ color: '#EF4444', fontSize: '0.8rem', textAlign: 'center', marginBottom: '0.8rem' }}>
+                                ⚠️ Please fill in all 5 required clinical parameters (Age, BP, HR, SpO₂) to estimate risk.
+                            </p>
+                        )}
                         <button onClick={handleAnalyze} disabled={!isFormValid}
                             style={{
                                 width: '100%', padding: '1rem', borderRadius: '30px', border: 'none',
@@ -427,7 +432,7 @@ const PredictionView: React.FC = () => {
                                 boxShadow: isFormValid ? '0 4px 16px rgba(255,154,92,0.4)' : 'none',
                                 transition: 'all 0.2s'
                             }}>
-                            Estimate My Risk →
+                            Estimate My Diagnosis & Risk →
                         </button>
                     </div>
                 )}
@@ -478,11 +483,17 @@ const PredictionView: React.FC = () => {
                                             </span>
                                         </div>
                                         {rhythmData && (
-                                            <p style={{ margin: '0 0 0.4rem 0', fontSize: '0.78rem', color: 'var(--text-main)', fontStyle: 'italic', lineHeight: 1.35 }}>
-                                                {rhythmData.description}
-                                            </p>
+                                            <div style={{ marginBottom: '0.6rem' }}>
+                                                <p style={{ margin: '0 0 0.4rem 0', fontSize: '0.82rem', color: 'var(--text-main)', fontStyle: 'italic', lineHeight: 1.35 }}>
+                                                    {rhythmData.description}
+                                                </p>
+                                                <div style={{ padding: '0.6rem', backgroundColor: 'rgba(255,255,255,0.4)', borderRadius: '8px', border: '1px solid rgba(0,0,0,0.05)', fontSize: '0.8rem', color: 'var(--text-main)' }}>
+                                                    <p style={{ margin: '0 0 0.4rem 0' }}><strong>🩺 Diagnostic Findings:</strong> {rhythmData.findings}</p>
+                                                    <p style={{ margin: 0 }}><strong>💊 Standard Treatment:</strong> {rhythmData.treatment}</p>
+                                                </div>
+                                            </div>
                                         )}
-                                        <p style={{ margin: 0, fontSize: '0.82rem', color: 'var(--text-muted)', lineHeight: 1.45 }}>{r.reason}</p>
+                                        <p style={{ margin: 0, fontSize: '0.82rem', color: 'var(--text-muted)', lineHeight: 1.45 }}><strong>Clinical Reason:</strong> {r.reason}</p>
                                     </div>
                                 </div>
                             );
