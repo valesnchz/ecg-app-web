@@ -14,8 +14,8 @@ const ManualView: React.FC = () => {
             content: 'Explore 27 different cardiac rhythms. Each rhythm includes a real-time animated ECG, key clinical findings, and treatment recommendations. Ideal for reviewing visual patterns before exams.'
         },
         {
-            title: '🤖 AI Prediction (Prediction View)',
-            content: 'Use our AI engine for diagnostic guidance. Enter at least 5 clinical parameters (such as heart rate, PR interval, QRS axis) and the application will generate a prediction based on logical ECG patterns.'
+            title: '🤖 AI Prediction (Diagnostic Engine)',
+            content: 'Our prediction model is a rule-based clinical engine that analyzes your health profile across 4 key pillars:\n\n• Clinical Vitals: Real-time analysis of Heart Rate (tachycardia/bradycardia), Blood Pressure (hypertensive strain), Temperature (inflammation/fever), and SpO2 (hypoxemia).\n\n• Risk Scoring: We calculate a cumulative risk score (up to 14 points) based on Age, Smoking habits, Diabetes, and Family History.\n\n• Critical Indicators: Chest Pain is treated as a high-priority trigger for Acute Coronary Syndrome (ACS) assessment.\n\n• Logical Mapping: The engine correlates these results with patterns like Coronary Artery Disease, Atrial Fibrillation, and Myocarditis, providing standard treatment paths and estimated ECG waveforms.'
         },
         {
             title: '🎮 Cardiac Quiz (Quiz Game)',
