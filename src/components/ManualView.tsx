@@ -10,20 +10,20 @@ const ManualView: React.FC = () => {
 
     const sections = [
         {
-            title: '📚 Guía de Estudio (Learning Catalog)',
-            content: 'Explora 27 ritmos cardíacos diferentes. Cada ritmo incluye un ECG animado en tiempo real, hallazgos clínicos clave y recomendaciones de tratamiento. Ideal para repasar patrones visuales antes de los exámenes.'
+            title: '📚 Study Guide (Learning Catalog)',
+            content: 'Explore 27 different cardiac rhythms. Each rhythm includes a real-time animated ECG, key clinical findings, and treatment recommendations. Ideal for reviewing visual patterns before exams.'
         },
         {
-            title: '🤖 Predicción con IA (Prediction View)',
-            content: 'Utiliza nuestro motor de IA para obtener una orientación diagnóstica. Introduce al menos 5 parámetros clínicos (como frecuencia cardíaca, intervalo PR, eje QRS) y la aplicación generará una predicción basada en patrones lógicos de ECG.'
+            title: '🤖 AI Prediction (Prediction View)',
+            content: 'Use our AI engine for diagnostic guidance. Enter at least 5 clinical parameters (such as heart rate, PR interval, QRS axis) and the application will generate a prediction based on logical ECG patterns.'
         },
         {
-            title: '🎮 Quiz Cardíaco (Quiz Game)',
-            content: 'Pon a prueba tus conocimientos con más de 100 preguntas. Tienes 3 vidas por sesión. El juego cubre desde la identificación básica de ondas hasta el manejo avanzado de arritmias.'
+            title: '🎮 Cardiac Quiz (Quiz Game)',
+            content: 'Test your knowledge with over 100 questions. You have 3 lives per session. The game covers everything from basic wave identification to advanced arrhythmia management.'
         },
         {
-            title: '👤 Perfil de Usuario',
-            content: 'Puedes cambiar tu nombre de usuario en cualquier momento haciendo clic en el icono de perfil en el Dashboard. Esto reiniciará tu sesión personalizada.'
+            title: '👤 User Profile',
+            content: 'You can change your username at any time by clicking the profile icon on the Dashboard. This will reset your personalized session.'
         }
     ];
 
@@ -50,11 +50,11 @@ const ManualView: React.FC = () => {
                 >
                     ←
                 </button>
-                <h1 style={{ fontSize: '1.8rem', margin: 0, fontWeight: 'bold' }}>Manual de Usuario</h1>
+                <h1 style={{ fontSize: '1.8rem', margin: 0, fontWeight: 'bold' }}>User Manual</h1>
             </div>
 
             <p style={{ color: 'var(--text-muted)', marginBottom: '2rem', lineHeight: '1.6' }}>
-                Bienvenido a tu plataforma inteligente de aprendizaje cardíaco. Sigue esta guía para aprovechar al máximo todas las herramientas disponibles.
+                Welcome to your intelligent cardiac learning platform. Follow this guide to make the most of all available tools.
             </p>
 
             {/* PDF Download Section */}
@@ -67,10 +67,10 @@ const ManualView: React.FC = () => {
                 backgroundColor: 'rgba(255,107,0,0.1)'
             }}>
                 <h2 style={{ fontSize: '1.2rem', color: 'var(--accent-orange)', marginBottom: '1rem' }}>
-                    📄 ¿Prefieres la versión completa?
+                    📄 Prefer the full version?
                 </h2>
                 <p style={{ fontSize: '0.9rem', marginBottom: '1.2rem' }}>
-                    Hemos preparado un manual detallado en PDF para que lo consultes cuando quieras.
+                    We have prepared a detailed User Manual in PDF for you to consult at any time.
                 </p>
                 <a 
                     href="/manual_usuario.pdf" 
@@ -87,7 +87,7 @@ const ManualView: React.FC = () => {
                         boxShadow: '0 4px 12px rgba(255,107,0,0.3)'
                     }}
                 >
-                    📥 Descargar Manual PDF
+                    📥 Download PDF Manual
                 </a>
             </div>
 
@@ -117,7 +117,7 @@ const ManualView: React.FC = () => {
             {/* Footer */}
             <div style={{ marginTop: '3rem', textAlign: 'center', borderTop: '1px solid rgba(0,0,0,0.1)', paddingTop: '1.5rem' }}>
                 <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-                    Recordatorio: Esta herramienta es exclusivamente educativa. En caso de emergencia, consulte a un profesional médico.
+                    Reminder: This tool is for educational purposes only. In case of emergency, consult a medical professional.
                 </p>
                 <button 
                     onClick={() => navigate('/')}
@@ -133,7 +133,7 @@ const ManualView: React.FC = () => {
                         borderRadius: '12px'
                     }}
                 >
-                    Volver al Inicio
+                    Back to Dashboard
                 </button>
             </div>
         </div>
