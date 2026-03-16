@@ -34,7 +34,7 @@ function buildQuestionBank(data: Arrhythmia[]): Question[] {
         // EASY: identify ECG waveform (visual, options from same category first)
         questions.push({
             type: 'identify_ecg', difficulty: 'easy',
-            text: 'What cardiac rhythm is shown below?',
+            text: `What cardiac rhythm is shown below? (${item.bpm} BPM)`,
             correct: item.name,
             options: shuffle([...pick(3), item.name]),
             rhythmId: item.id, bpm: item.bpm
@@ -164,15 +164,15 @@ const QuizGame: React.FC = () => {
     }, [selected, current, streak, difficulty]);
 
     const nextQuestion = () => {
-        if (lives <= 0 && feedback === 'wrong') { setPhase('result'); return; }
-        if (isLastQuestion || (lives - (feedback === 'wrong' ? 1 : 0)) <= 0) { setPhase('result'); return; }
+        if (lives <= 0) { setPhase('result'); return; }
+        if (isLastQuestion) { setPhase('result'); return; }
         setSelected(null);
         setFeedback(null);
         setQIndex(i => i + 1);
     };
 
     // Check if lives just hit 0 after wrong answer
-    const effectiveLives = feedback === 'wrong' ? lives - 1 : lives;
+    const effectiveLives = lives;
     const shouldShowNext = feedback !== null && effectiveLives > 0 && !isLastQuestion;
     const shouldShowFinish = feedback !== null && (effectiveLives <= 0 || isLastQuestion);
 

@@ -35,6 +35,14 @@ const DashboardHome: React.FC = () => {
             subtitle: 'Test your knowledge with 100+ questions on rhythms and treatments',
             color: '#10B981',
             bg: 'rgba(16,185,129,0.1)'
+        },
+        {
+            path: '/manual',
+            emoji: '📖',
+            title: 'App Manual',
+            subtitle: 'How to use the study guide, AI features, and quiz game',
+            color: '#F59E0B',
+            bg: 'rgba(245,158,11,0.1)'
         }
     ];
 

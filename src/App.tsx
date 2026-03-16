@@ -6,6 +6,7 @@ import DashboardHome from './components/DashboardHome';
 import LearningCatalog from './components/LearningCatalog';
 import QuizGame from './components/QuizGame';
 import PredictionView from './components/PredictionView';
+import ManualView from './components/ManualView';
 
 /**
  * Inner shell that gates the app behind the WelcomeScreen if no user name is set.
@@ -19,6 +20,7 @@ const AppShell: React.FC = () => {
       <Route path="/learning" element={<LearningCatalog />} />
       <Route path="/prediction" element={<PredictionView />} />
       <Route path="/quiz" element={<QuizGame />} />
+      <Route path="/manual" element={<ManualView />} />
       {/* Fallback */}
       <Route path="*" element={<DashboardHome />} />
     </Routes>
